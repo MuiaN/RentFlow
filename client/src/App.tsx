@@ -7,6 +7,7 @@ import { DataProvider } from "@/context/DataContext";
 import NotFound from "@/pages/not-found";
 
 import Dashboard from "@/pages/Dashboard";
+import Login from "@/pages/Login";
 import Units from "@/pages/Units";
 import Tenants from "@/pages/Tenants";
 import TenantProfile from "@/pages/TenantProfile";
@@ -16,7 +17,8 @@ import Receipts from "@/pages/Receipts";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Dashboard} />
+      <Route path="/" component={Login} />
+      <Route path="/dashboard" component={Dashboard} />
       <Route path="/units" component={Units} />
       <Route path="/tenants" component={Tenants} />
       <Route path="/tenants/:id" component={TenantProfile} />

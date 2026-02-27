@@ -44,72 +44,72 @@ export default function Dashboard() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="hover-elevate border-none shadow-md shadow-black/5 bg-gradient-to-br from-white to-slate-50">
+          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+              <CardTitle className="text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
                 Total Units
               </CardTitle>
-              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                <Building2 className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 shadow-inner">
+                <Building2 className="w-6 h-6" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-display font-bold">{totalUnits}</div>
-              <p className="text-sm text-muted-foreground mt-1 font-medium">
-                {occupancyRate}% occupancy rate
+            <CardContent className="pt-2">
+              <div className="text-4xl font-display font-black tracking-tighter">{totalUnits}</div>
+              <p className="text-sm text-muted-foreground mt-2 font-semibold">
+                <span className="text-blue-600 font-black">{occupancyRate}%</span> occupancy rate
               </p>
             </CardContent>
           </Card>
 
-          <Card className="hover-elevate border-none shadow-md shadow-black/5 bg-gradient-to-br from-white to-slate-50">
+          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+              <CardTitle className="text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
                 Active Tenants
               </CardTitle>
-              <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600">
-                <Users className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-inner">
+                <Users className="w-6 h-6" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-display font-bold">{tenants.length}</div>
-              <p className="text-sm text-muted-foreground mt-1 font-medium">
-                Across {occupiedUnits} properties
+            <CardContent className="pt-2">
+              <div className="text-4xl font-display font-black tracking-tighter">{tenants.length}</div>
+              <p className="text-sm text-muted-foreground mt-2 font-semibold">
+                Across <span className="text-indigo-600 font-black">{occupiedUnits}</span> properties
               </p>
             </CardContent>
           </Card>
 
-          <Card className="hover-elevate border-none shadow-md shadow-black/5 bg-gradient-to-br from-white to-slate-50">
+          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                Collected Revenue
+              <CardTitle className="text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
+                Revenue
               </CardTitle>
-              <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                <Banknote className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-inner">
+                <Banknote className="w-6 h-6" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-display font-bold">${totalRevenue.toLocaleString()}</div>
-              <p className="text-sm text-emerald-600 mt-1 font-medium flex items-center gap-1">
-                ↑ 4.2% from last month
+            <CardContent className="pt-2">
+              <div className="text-4xl font-display font-black tracking-tighter">KSh {totalRevenue.toLocaleString()}</div>
+              <p className="text-sm text-emerald-600 mt-2 font-black flex items-center gap-1">
+                ↑ 4.2% <span className="text-muted-foreground font-semibold">vs last month</span>
               </p>
             </CardContent>
           </Card>
 
-          <Card className="hover-elevate border-none shadow-md shadow-black/5 bg-gradient-to-br from-white to-red-50/30">
+          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                Overdue Amount
+              <CardTitle className="text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
+                Overdue
               </CardTitle>
-              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
-                <AlertCircle className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-600 shadow-inner">
+                <AlertCircle className="w-6 h-6" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-display font-bold text-red-600">
-                ${overdueAmount.toLocaleString()}
+            <CardContent className="pt-2">
+              <div className="text-4xl font-display font-black tracking-tighter text-rose-600">
+                KSh {overdueAmount.toLocaleString()}
               </div>
-              <p className="text-sm text-muted-foreground mt-1 font-medium">
-                Requires attention
+              <p className="text-sm text-muted-foreground mt-2 font-semibold">
+                Immediate attention required
               </p>
             </CardContent>
           </Card>
@@ -117,22 +117,54 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Chart */}
-          <Card className="lg:col-span-2 border-border/50 shadow-sm">
-            <CardHeader>
-              <CardTitle className="font-display">Revenue Overview</CardTitle>
+          <Card className="lg:col-span-2 border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden">
+            <CardHeader className="border-b border-slate-100 bg-slate-50/30 p-8">
+              <CardTitle className="font-display text-2xl font-black tracking-tight">Revenue Overview</CardTitle>
+              <CardDescription className="text-base font-medium">Monthly collection trends for 2024</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="h-[300px] w-full">
+            <CardContent className="p-8">
+              <div className="h-[350px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 13 }} dy={10} />
-                    <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 13 }} tickFormatter={(value) => `$${value}`} />
-                    <Tooltip 
-                      contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
-                      formatter={(value: number) => [`$${value}`, 'Revenue']}
+                  <LineChart data={chartData} margin={{ top: 20, right: 30, bottom: 20, left: 10 }}>
+                    <defs>
+                      <linearGradient id="lineGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
+                        <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                    <XAxis 
+                      dataKey="name" 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 600 }} 
+                      dy={15} 
                     />
-                    <Line type="monotone" dataKey="revenue" stroke="hsl(var(--primary))" strokeWidth={4} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6, strokeWidth: 0 }} />
+                    <YAxis 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 600 }} 
+                      tickFormatter={(value) => `KSh ${value/1000}k`} 
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        borderRadius: '20px', 
+                        border: 'none', 
+                        boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)',
+                        padding: '16px'
+                      }}
+                      itemStyle={{ fontWeight: 800, color: 'hsl(var(--primary))' }}
+                      labelStyle={{ fontWeight: 600, marginBottom: '4px', color: '#64748b' }}
+                      formatter={(value: number) => [`KSh ${value.toLocaleString()}`, 'Revenue']}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="revenue" 
+                      stroke="hsl(var(--primary))" 
+                      strokeWidth={5} 
+                      dot={{ r: 6, fill: 'white', strokeWidth: 3, stroke: 'hsl(var(--primary))' }} 
+                      activeDot={{ r: 8, strokeWidth: 0, fill: 'hsl(var(--accent))' }} 
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -140,37 +172,46 @@ export default function Dashboard() {
           </Card>
 
           {/* Action Items List */}
-          <Card className="border-border/50 shadow-sm flex flex-col">
-            <CardHeader className="border-b border-border/50 bg-slate-50/50">
-              <CardTitle className="font-display flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-red-500" /> Action Required
+          <Card className="border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-3xl flex flex-col overflow-hidden">
+            <CardHeader className="border-b border-rose-100 bg-rose-50/30 p-8">
+              <CardTitle className="font-display text-2xl font-black tracking-tight flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-rose-500 flex items-center justify-center">
+                  <AlertCircle className="w-5 h-5 text-white" />
+                </div>
+                Action Required
               </CardTitle>
+              <CardDescription className="text-rose-600/70 font-bold">Priority notifications</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 p-0">
-              <div className="divide-y divide-border/50">
+              <div className="divide-y divide-slate-100">
                 {invoices.filter(i => i.status === "Overdue").length > 0 ? (
                   invoices.filter(i => i.status === "Overdue").map((invoice) => {
                     const tenant = tenants.find(t => t.id === invoice.tenantId);
                     return (
-                      <div key={invoice.id} className="p-5 flex items-center justify-between hover:bg-slate-50 transition-colors">
-                        <div>
-                          <p className="font-semibold text-foreground">{tenant?.name || "Unknown Tenant"}</p>
-                          <p className="text-sm text-muted-foreground">{invoice.month} Rent</p>
+                      <div key={invoice.id} className="p-6 flex items-center justify-between hover:bg-rose-50/30 transition-all duration-300 group">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center font-black text-slate-400 group-hover:bg-rose-100 group-hover:text-rose-500 transition-colors">
+                            {tenant?.name.charAt(0)}
+                          </div>
+                          <div>
+                            <p className="font-black text-slate-900 leading-none mb-1">{tenant?.name || "Unknown Tenant"}</p>
+                            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{invoice.month} Rent</p>
+                          </div>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold text-red-600">${invoice.amount}</p>
-                          <Badge variant="outline" className="mt-1 bg-red-50 text-red-700 border-red-200">Overdue</Badge>
+                          <p className="font-black text-rose-600 text-lg">KSh {invoice.amount.toLocaleString()}</p>
+                          <Badge className="mt-1 bg-rose-100 text-rose-700 border-none font-bold rounded-lg px-2 text-[10px]">OVERDUE</Badge>
                         </div>
                       </div>
                     );
                   })
                 ) : (
-                  <div className="p-8 text-center text-muted-foreground flex flex-col items-center justify-center h-full">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 mb-3">
-                      <Banknote className="w-6 h-6" />
+                  <div className="p-12 text-center text-muted-foreground flex flex-col items-center justify-center h-full">
+                    <div className="w-20 h-20 rounded-3xl bg-emerald-50 flex items-center justify-center text-emerald-500 mb-6 shadow-inner">
+                      <Banknote className="w-10 h-10" />
                     </div>
-                    <p className="font-medium">All caught up!</p>
-                    <p className="text-sm mt-1">No overdue invoices found.</p>
+                    <p className="text-xl font-black text-slate-900 tracking-tight">All caught up!</p>
+                    <p className="text-sm font-medium mt-2 max-w-[180px]">No overdue invoices currently require your attention.</p>
                   </div>
                 )}
               </div>
