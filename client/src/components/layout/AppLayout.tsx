@@ -5,8 +5,10 @@ import {
   Users, 
   FileText, 
   Receipt as ReceiptIcon, 
-  LayoutDashboard 
+  LayoutDashboard,
+  LogIn 
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
