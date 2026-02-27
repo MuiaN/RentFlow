@@ -1,0 +1,310 @@
+Build a modern frontend-only web application called “RentFlow – Rental Management Dashboard (Demo)”.
+
+This is a mock demo application for a rental management company. It must NOT connect to a real backend. Use mock data stored locally in JSON files or JavaScript objects.
+
+Use:
+
+React (with Vite or Next.js frontend-only mode)
+
+TypeScript (preferred)
+
+Tailwind CSS for styling
+
+Component-based structure
+
+Clean, professional dashboard UI
+
+Responsive design
+
+🎯 PURPOSE OF THE APP
+
+This is a demo dashboard for a rental management company admin and staff to:
+
+Manage houses/units
+
+Assign tenants to units
+
+Automatically generate monthly invoices (mock logic)
+
+Mark invoices as paid (cash or bank transfer)
+
+Automatically generate receipts (mock)
+
+Automatically show due and past-due invoices
+
+Simulate automated notifications (UI simulation only)
+
+The app must look realistic and production-ready but must use only mock data.
+
+📁 APP STRUCTURE
+
+Create the following pages:
+
+1️⃣ Login Page (Mock Only)
+
+Simple login screen
+
+Roles: Admin / Staff
+
+No real authentication (just navigate to dashboard)
+
+2️⃣ Dashboard Page
+
+Show summary cards:
+
+Total Units
+
+Occupied Units
+
+Vacant Units
+
+Total Tenants
+
+Total Rent Collected (This Month)
+
+Overdue Invoices
+
+Include:
+
+Monthly revenue chart (mock data)
+
+Recent payments table
+
+Overdue invoices section
+
+3️⃣ Units Page
+
+Display a table of rental units with columns:
+
+Unit Name
+
+Property Name
+
+Type (1 Bedroom, 2 Bedroom, Studio, etc.)
+
+Monthly Rent
+
+Status (Occupied / Vacant)
+
+Assigned Tenant (if any)
+
+Actions (View / Assign Tenant)
+
+Use realistic Kenyan-style property examples like:
+
+Greenview Apartments – Unit A1 – 1 Bedroom – KES 25,000
+
+Riverside Court – Unit B3 – 2 Bedroom – KES 45,000
+
+Sunset Residency – Studio S2 – KES 18,000
+
+Royal Gardens – Unit C5 – 3 Bedroom – KES 65,000
+
+At least 12–20 mock units.
+
+4️⃣ Tenants Page
+
+Display tenants in a table:
+
+Full Name
+
+Phone Number
+
+Email
+
+Assigned Unit
+
+Monthly Rent
+
+Payment Status (Paid / Due / Overdue)
+
+Actions (View Profile)
+
+Use realistic mock tenant names and Kenyan phone numbers.
+
+Example:
+
+Brian Mwangi
+
+Faith Wanjiru
+
+Daniel Otieno
+
+Mercy Njeri
+
+5️⃣ Tenant Profile Page
+
+Show:
+
+Tenant details
+
+Assigned Unit
+
+Rent amount
+
+Lease start date
+
+Invoice history
+
+Payment history
+
+Button: “Mark as Paid”
+
+Button: “Generate Receipt”
+
+Payment method selector (Cash / Bank Transfer)
+
+When “Mark as Paid” is clicked:
+
+Invoice status updates in UI
+
+A mock receipt object is generated
+
+A success message appears:
+“Receipt sent to tenant successfully (Demo Simulation)”
+
+6️⃣ Invoices Page
+
+Show list of all invoices:
+
+Columns:
+
+Invoice Number
+
+Tenant
+
+Unit
+
+Month
+
+Amount
+
+Status (Paid / Due / Overdue)
+
+Due Date
+
+Action (Mark as Paid)
+
+Simulate:
+
+Monthly invoice generation logic (based on current month)
+
+Overdue logic if due date is past current date
+
+Badge styling for statuses
+
+7️⃣ Receipts Page
+
+Display:
+
+Receipt Number
+
+Tenant Name
+
+Invoice Reference
+
+Amount Paid
+
+Payment Method
+
+Payment Date
+
+Download (Mock PDF button)
+
+The Download button should simulate download using a generated PDF or fake file generation.
+
+🔁 AUTOMATED LOGIC (Frontend Simulation Only)
+
+Implement mock logic:
+
+Monthly invoices are automatically generated for occupied units.
+
+If today’s date > due date → mark invoice as “Overdue”
+
+If admin clicks “Mark as Paid”:
+
+Invoice status becomes “Paid”
+
+Receipt entry is created
+
+Tenant payment status updates
+
+Show a toast notification:
+
+“Invoice reminder sent to tenant (Demo)”
+
+“Receipt emailed successfully (Demo)”
+
+No real email service needed — just simulate UI feedback.
+
+📦 MOCK DATA FILE
+
+Create a mockData.ts file containing:
+
+Units array
+
+Tenants array
+
+Invoices array
+
+Payments array
+
+Receipts array
+
+Use realistic data and cross-reference IDs properly.
+
+🎨 DESIGN REQUIREMENTS
+
+Modern SaaS-style UI
+
+Sidebar navigation
+
+Top navbar with company name and user role
+
+Status badges (Green = Paid, Red = Overdue, Yellow = Due)
+
+Clean cards and spacing
+
+Use icons where necessary
+
+Use modal dialogs for assigning tenants and marking payments
+
+Responsive layout
+
+📊 BONUS FEATURES (If possible)
+
+Revenue line chart (use mock monthly data)
+
+Filter invoices by:
+
+Paid
+
+Due
+
+Overdue
+
+Search tenants
+
+Dark mode toggle
+
+🚫 IMPORTANT
+
+Do NOT connect to a backend.
+
+Do NOT require authentication setup.
+
+Everything must run fully on frontend with mock data.
+
+This is for presentation/demo only.
+
+🎯 END GOAL
+
+The final result should look like a professional rental property management system suitable for:
+
+Real estate companies
+
+Property managers
+
+Landlords
+
+It should feel realistic, structured, and business-ready even though it uses mock data.
