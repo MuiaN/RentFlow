@@ -10,6 +10,8 @@ interface DataContextType {
   receipts: Receipt[];
   assignTenant: (unitId: string, tenantId: string) => void;
   markInvoicePaid: (invoiceId: string, method: "Cash" | "Bank Transfer") => void;
+  addTenant: (tenant: Omit<Tenant, "id">) => void;
+  addUnit: (unit: Omit<Unit, "id">) => void;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -20,6 +22,24 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [invoices, setInvoices] = useState<Invoice[]>(mockInvoices);
   const [receipts, setReceipts] = useState<Receipt[]>(mockReceipts);
   const { toast } = useToast();
+
+  const addTenant = (tenantData: Omit<Tenant, "id">) => {
+    const newTenant: Tenant = {
+      ...tenantData,
+      id: `t${Date.now()}`,
+    };
+    setTenants(prev => [...prev, newTenant]);
+    toast({ title: "Tenant Added", description: `${newTenant.name} has been added to the directory.` });
+  };
+
+  const addUnit = (unitData: Omit<Unit, "id">) => {
+    const newUnit: Unit = {
+      ...unitData,
+      id: `u${Date.now()}`,
+    };
+    setUnits(prev => [...prev, newUnit]);
+    toast({ title: "Unit Added", description: `${newUnit.name} has been added to the portfolio.` });
+  };
 
   const assignTenant = (unitId: string, tenantId: string) => {
     setUnits((prev) =>
@@ -85,7 +105,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   return (
     <DataContext.Provider
-      value={{ units, tenants, invoices, receipts, assignTenant, markInvoicePaid }}
+      value={{ units, tenants, invoices, receipts, assignTenant, markInvoicePaid, addTenant, addUnit }}
     >
       {children}
     </DataContext.Provider>

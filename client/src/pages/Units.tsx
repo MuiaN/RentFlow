@@ -4,9 +4,10 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Table,
-  Body,
   TableCell,
   TableHead,
   TableHeader,
@@ -17,6 +18,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -28,22 +30,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { UserPlus, Home } from "lucide-react";
+import { UserPlus, Home, Plus } from "lucide-react";
 
 export default function Units() {
-  const { units, tenants, assignTenant } = useData();
+  const { units, tenants, assignTenant, addUnit } = useData();
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   const [selectedTenant, setSelectedTenant] = useState<string>("");
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [assignDialogOpen, setAssignDialogOpen] = useState(false);
+  const [addUnitDialogOpen, setAddUnitDialogOpen] = useState(false);
+
+  // New unit form state
+  const [newUnit, setNewUnit] = useState({
+    name: "",
+    propertyName: "",
+    type: "1 Bedroom",
+    rentAmount: 0,
+  });
 
   const unassignedTenants = tenants.filter(t => !t.assignedUnitId);
 
   const handleAssign = () => {
     if (selectedUnit && selectedTenant) {
       assignTenant(selectedUnit, selectedTenant);
-      setDialogOpen(false);
+      setAssignDialogOpen(false);
       setSelectedTenant("");
     }
+  };
+
+  const handleAddUnit = (e: React.FormEvent) => {
+    e.preventDefault();
+    addUnit({
+      ...newUnit,
+      status: "Vacant",
+      assignedTenantId: null,
+    });
+    setAddUnitDialogOpen(false);
+    setNewUnit({ name: "", propertyName: "", type: "1 Bedroom", rentAmount: 0 });
   };
 
   return (
@@ -53,21 +75,84 @@ export default function Units() {
           <h2 className="text-3xl font-display font-bold">Properties & Units</h2>
           <p className="text-muted-foreground mt-1">Manage your real estate portfolio.</p>
         </div>
-        <Button className="bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 rounded-xl px-6 h-11">
-          <Home className="w-4 h-4 mr-2" /> Add Property
-        </Button>
+        <Dialog open={addUnitDialogOpen} onOpenChange={setAddUnitDialogOpen}>
+          <DialogTrigger asChild>
+            <Button className="bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 rounded-xl px-6 h-11">
+              <Plus className="w-4 h-4 mr-2" /> Add Property
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px] rounded-2xl">
+            <DialogHeader>
+              <DialogTitle className="font-display">Add New Property Unit</DialogTitle>
+              <DialogDescription>
+                Enter the details for the new rental unit.
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleAddUnit} className="space-y-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="name">Unit Name</Label>
+                <Input 
+                  id="name" 
+                  placeholder="e.g. Unit A1" 
+                  value={newUnit.name} 
+                  onChange={e => setNewUnit(prev => ({ ...prev, name: e.target.value }))}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="propertyName">Property Name</Label>
+                <Input 
+                  id="propertyName" 
+                  placeholder="e.g. Riverside Court" 
+                  value={newUnit.propertyName} 
+                  onChange={e => setNewUnit(prev => ({ ...prev, propertyName: e.target.value }))}
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="type">Unit Type</Label>
+                  <Select value={newUnit.type} onValueChange={v => setNewUnit(prev => ({ ...prev, type: v }))}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Studio">Studio</SelectItem>
+                      <SelectItem value="1 Bedroom">1 Bedroom</SelectItem>
+                      <SelectItem value="2 Bedroom">2 Bedroom</SelectItem>
+                      <SelectItem value="3 Bedroom">3 Bedroom</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="rent">Monthly Rent (KSh)</Label>
+                  <Input 
+                    id="rent" 
+                    type="number" 
+                    value={newUnit.rentAmount} 
+                    onChange={e => setNewUnit(prev => ({ ...prev, rentAmount: parseInt(e.target.value) }))}
+                    required
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit" className="w-full h-12 rounded-xl font-bold">Create Unit</Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
-      <Card className="border-border/50 shadow-sm overflow-hidden">
+      <Card className="border-border/50 shadow-sm overflow-hidden bg-white/50 backdrop-blur-sm rounded-2xl">
         <Table>
           <TableHeader className="bg-slate-50/80">
             <TableRow>
-              <TableHead className="font-semibold text-muted-foreground">Unit</TableHead>
-              <TableHead className="font-semibold text-muted-foreground">Property</TableHead>
-              <TableHead className="font-semibold text-muted-foreground">Type</TableHead>
-              <TableHead className="font-semibold text-muted-foreground">Rent</TableHead>
-              <TableHead className="font-semibold text-muted-foreground">Status</TableHead>
-              <TableHead className="text-right font-semibold text-muted-foreground">Actions</TableHead>
+              <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Unit</TableHead>
+              <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Property</TableHead>
+              <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Type</TableHead>
+              <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Rent</TableHead>
+              <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Status</TableHead>
+              <TableHead className="text-right font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14 pr-6">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -75,37 +160,37 @@ export default function Units() {
               const assignedTenant = tenants.find(t => t.id === unit.assignedTenantId);
               
               return (
-                <TableRow key={unit.id} className="hover:bg-slate-50/50 transition-colors group">
-                  <TableCell className="font-medium text-foreground py-4">{unit.name}</TableCell>
-                  <TableCell>{unit.propertyName}</TableCell>
-                  <TableCell className="text-muted-foreground">{unit.type}</TableCell>
-                  <TableCell className="font-semibold text-slate-700">KSh {unit.rentAmount.toLocaleString()}/mo</TableCell>
+                <TableRow key={unit.id} className="hover:bg-slate-50/80 transition-all group">
+                  <TableCell className="font-bold text-slate-900 py-5">{unit.name}</TableCell>
+                  <TableCell className="font-medium text-slate-600">{unit.propertyName}</TableCell>
+                  <TableCell className="text-muted-foreground font-medium">{unit.type}</TableCell>
+                  <TableCell className="font-bold text-slate-800">KSh {unit.rentAmount.toLocaleString()}/mo</TableCell>
                   <TableCell>
                     {unit.status === "Occupied" ? (
-                      <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 shadow-sm">
-                        Occupied
+                      <Badge className="bg-emerald-50 text-emerald-700 border-none shadow-none font-bold rounded-lg px-3 py-1">
+                        OCCUPIED
                       </Badge>
                     ) : (
-                      <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 shadow-sm">
-                        Vacant
+                      <Badge className="bg-amber-50 text-amber-700 border-none shadow-none font-bold rounded-lg px-3 py-1">
+                        VACANT
                       </Badge>
                     )}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right pr-6">
                     {unit.status === "Vacant" ? (
-                      <Dialog open={dialogOpen && selectedUnit === unit.id} onOpenChange={(open) => {
-                        setDialogOpen(open);
+                      <Dialog open={assignDialogOpen && selectedUnit === unit.id} onOpenChange={(open) => {
+                        setAssignDialogOpen(open);
                         if(open) setSelectedUnit(unit.id);
                       }}>
                         <DialogTrigger asChild>
-                          <Button size="sm" variant="outline" className="rounded-lg shadow-sm border-primary/20 text-primary hover:bg-primary/5 hover:text-primary">
+                          <Button size="sm" variant="outline" className="rounded-xl font-bold shadow-sm border-primary/20 text-primary hover:bg-primary hover:text-white transition-all">
                             <UserPlus className="w-4 h-4 mr-2" /> Assign
                           </Button>
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-md rounded-2xl">
                           <DialogHeader>
-                            <DialogTitle className="font-display text-xl">Assign Tenant</DialogTitle>
-                            <DialogDescription>
+                            <DialogTitle className="font-display text-2xl font-black">Assign Tenant</DialogTitle>
+                            <DialogDescription className="font-medium">
                               Select an unassigned tenant for {unit.name} at {unit.propertyName}.
                             </DialogDescription>
                           </DialogHeader>
@@ -113,17 +198,17 @@ export default function Units() {
                             {unassignedTenants.length > 0 ? (
                               <div className="space-y-4">
                                 <Select value={selectedTenant} onValueChange={setSelectedTenant}>
-                                  <SelectTrigger className="h-12 rounded-xl">
+                                  <SelectTrigger className="h-12 rounded-xl border-slate-200">
                                     <SelectValue placeholder="Select a tenant..." />
                                   </SelectTrigger>
-                                  <SelectContent>
+                                  <SelectContent className="rounded-xl">
                                     {unassignedTenants.map(t => (
-                                      <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>
+                                      <SelectItem key={t.id} value={t.id} className="rounded-lg">{t.name}</SelectItem>
                                     ))}
                                   </SelectContent>
                                 </Select>
                                 <Button 
-                                  className="w-full h-12 rounded-xl text-md font-semibold bg-primary hover:bg-primary/90" 
+                                  className="w-full h-12 rounded-xl text-md font-black bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20" 
                                   onClick={handleAssign}
                                   disabled={!selectedTenant}
                                 >
@@ -131,17 +216,18 @@ export default function Units() {
                                 </Button>
                               </div>
                             ) : (
-                              <div className="text-center p-4 bg-slate-50 rounded-xl border border-border">
-                                <p className="text-muted-foreground">No unassigned tenants available.</p>
-                                <Button variant="link" className="mt-2 text-primary">Add a new tenant first</Button>
+                              <div className="text-center p-8 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
+                                <Users className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+                                <p className="text-muted-foreground font-medium">No unassigned tenants available.</p>
+                                <Button variant="link" className="mt-2 text-primary font-bold">Add a new tenant first</Button>
                               </div>
                             )}
                           </div>
                         </DialogContent>
                       </Dialog>
                     ) : (
-                      <div className="text-sm font-medium text-slate-600 flex items-center justify-end gap-2">
-                        <div className="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600">
+                      <div className="text-sm font-black text-slate-900 flex items-center justify-end gap-3 group-hover:translate-x-[-4px] transition-transform">
+                        <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center text-xs font-black text-slate-500 shadow-inner">
                           {assignedTenant?.name.charAt(0)}
                         </div>
                         {assignedTenant?.name}

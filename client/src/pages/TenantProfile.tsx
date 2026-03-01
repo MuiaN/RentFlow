@@ -126,7 +126,7 @@ export default function TenantProfile() {
                 <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-1">Rent Amount</p>
                 <div className="flex items-center gap-2">
                   <CreditCard className="w-5 h-5 text-emerald-600" />
-                  <span className="font-bold text-xl">${tenant.rentAmount.toLocaleString()}</span><span className="text-muted-foreground">/ month</span>
+                  <span className="font-bold text-xl">KSh {tenant.rentAmount.toLocaleString()}</span><span className="text-muted-foreground">/ month</span>
                 </div>
               </div>
               <div>
@@ -169,7 +169,7 @@ export default function TenantProfile() {
                       
                       <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto">
                         <div className="text-right">
-                          <p className="font-bold text-xl">${invoice.amount.toLocaleString()}</p>
+                          <p className="font-bold text-xl">KSh {invoice.amount.toLocaleString()}</p>
                           <p className="text-sm mt-0.5">
                             {invoice.status === 'Paid' ? 
                               <span className="text-emerald-600 font-semibold">Paid</span> : 
@@ -196,7 +196,7 @@ export default function TenantProfile() {
                               <div className="py-6 space-y-4">
                                 <div className="p-4 bg-slate-50 rounded-xl border border-border flex justify-between items-center">
                                   <span className="font-medium text-muted-foreground">Amount Due:</span>
-                                  <span className="text-2xl font-bold">${invoice.amount.toLocaleString()}</span>
+                                  <span className="text-2xl font-bold">KSh {invoice.amount.toLocaleString()}</span>
                                 </div>
                                 <div className="space-y-2">
                                   <label className="text-sm font-semibold">Payment Method</label>
