@@ -19,7 +19,7 @@ export default function Login() {
       title: "Success",
       description: "Logged in successfully (Demo)",
     });
-    setLocation("/");
+    setLocation("/dashboard");
   };
 
   return (

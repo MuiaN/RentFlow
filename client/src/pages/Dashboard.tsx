@@ -27,10 +27,10 @@ export default function Dashboard() {
 
   // Mock chart data representing last 6 months
   const chartData = [
-    { name: 'Jan', revenue: 4200 },
-    { name: 'Feb', revenue: 4800 },
-    { name: 'Mar', revenue: 5100 },
-    { name: 'Apr', revenue: 4900 },
+    { name: 'Jan', revenue: 425000 },
+    { name: 'Feb', revenue: 480000 },
+    { name: 'Mar', revenue: 510000 },
+    { name: 'Apr', revenue: 490000 },
     { name: 'May', revenue: totalRevenue },
   ];
 

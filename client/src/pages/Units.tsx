@@ -79,7 +79,7 @@ export default function Units() {
                   <TableCell className="font-medium text-foreground py-4">{unit.name}</TableCell>
                   <TableCell>{unit.propertyName}</TableCell>
                   <TableCell className="text-muted-foreground">{unit.type}</TableCell>
-                  <TableCell className="font-semibold">${unit.rentAmount.toLocaleString()}/mo</TableCell>
+                  <TableCell className="font-semibold text-slate-700">KSh {unit.rentAmount.toLocaleString()}/mo</TableCell>
                   <TableCell>
                     {unit.status === "Occupied" ? (
                       <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 shadow-sm">

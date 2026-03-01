@@ -56,7 +56,7 @@ export default function Invoices() {
                   <TableCell className="font-semibold text-foreground">{tenant?.name || "Unknown"}</TableCell>
                   <TableCell className="font-medium text-slate-600">{invoice.month}</TableCell>
                   <TableCell className="text-slate-500">{format(new Date(invoice.dueDate), 'MMM d, yyyy')}</TableCell>
-                  <TableCell className="text-right font-bold">${invoice.amount.toLocaleString()}</TableCell>
+                  <TableCell className="text-right font-bold text-slate-900">KSh {invoice.amount.toLocaleString()}</TableCell>
                   <TableCell className="text-center">
                     {invoice.status === 'Paid' ? (
                       <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">Paid</Badge>
