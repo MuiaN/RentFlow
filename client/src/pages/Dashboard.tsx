@@ -38,92 +38,92 @@ export default function Dashboard() {
     <AppLayout>
       <div className="flex flex-col gap-8">
         <div>
-          <h2 className="text-3xl font-display font-bold text-foreground">Dashboard</h2>
-          <p className="text-muted-foreground mt-1 text-lg">Welcome back. Here's what's happening today.</p>
+          <h2 className="text-2xl lg:text-3xl font-display font-bold text-foreground">Dashboard</h2>
+          <p className="text-muted-foreground mt-1 text-base lg:text-lg">Welcome back. Here's what's happening today.</p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl p-0 overflow-hidden">
+            <CardHeader className="flex flex-row items-center justify-between pb-1 pt-4 px-4 space-y-0">
+              <CardTitle className="text-[10px] lg:text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
                 Total Units
               </CardTitle>
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 shadow-inner">
-                <Building2 className="w-6 h-6" />
+              <div className="w-8 h-8 lg:w-12 lg:h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shadow-inner">
+                <Building2 className="w-4 h-4 lg:w-6 lg:h-6" />
               </div>
             </CardHeader>
-            <CardContent className="pt-2">
-              <div className="text-4xl font-display font-black tracking-tighter">{totalUnits}</div>
-              <p className="text-sm text-muted-foreground mt-2 font-semibold">
-                <span className="text-blue-600 font-black">{occupancyRate}%</span> occupancy rate
+            <CardContent className="pt-0 pb-4 px-4">
+              <div className="text-2xl lg:text-4xl font-display font-black tracking-tighter">{totalUnits}</div>
+              <p className="hidden lg:block text-sm text-muted-foreground mt-2 font-semibold">
+                <span className="text-blue-600 font-black">{occupancyRate}%</span> occupancy
               </p>
             </CardContent>
           </Card>
 
-          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
-                Active Tenants
+          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl p-0 overflow-hidden">
+            <CardHeader className="flex flex-row items-center justify-between pb-1 pt-4 px-4 space-y-0">
+              <CardTitle className="text-[10px] lg:text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
+                Tenants
               </CardTitle>
-              <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-inner">
-                <Users className="w-6 h-6" />
+              <div className="w-8 h-8 lg:w-12 lg:h-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 shadow-inner">
+                <Users className="w-4 h-4 lg:w-6 lg:h-6" />
               </div>
             </CardHeader>
-            <CardContent className="pt-2">
-              <div className="text-4xl font-display font-black tracking-tighter">{tenants.length}</div>
-              <p className="text-sm text-muted-foreground mt-2 font-semibold">
+            <CardContent className="pt-0 pb-4 px-4">
+              <div className="text-2xl lg:text-4xl font-display font-black tracking-tighter">{tenants.length}</div>
+              <p className="hidden lg:block text-sm text-muted-foreground mt-2 font-semibold">
                 Across <span className="text-indigo-600 font-black">{occupiedUnits}</span> properties
               </p>
             </CardContent>
           </Card>
 
-          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
+          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl p-0 overflow-hidden">
+            <CardHeader className="flex flex-row items-center justify-between pb-1 pt-4 px-4 space-y-0">
+              <CardTitle className="text-[10px] lg:text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
                 Revenue
               </CardTitle>
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-inner">
-                <Banknote className="w-6 h-6" />
+              <div className="w-8 h-8 lg:w-12 lg:h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shadow-inner">
+                <Banknote className="w-4 h-4 lg:w-6 lg:h-6" />
               </div>
             </CardHeader>
-            <CardContent className="pt-2">
-              <div className="text-4xl font-display font-black tracking-tighter">KSh {totalRevenue.toLocaleString()}</div>
-              <p className="text-sm text-emerald-600 mt-2 font-black flex items-center gap-1">
+            <CardContent className="pt-0 pb-4 px-4">
+              <div className="text-xl lg:text-4xl font-display font-black tracking-tighter">KSh {totalRevenue.toLocaleString()}</div>
+              <p className="hidden lg:block text-sm text-emerald-600 mt-2 font-black">
                 ↑ 4.2% <span className="text-muted-foreground font-semibold">vs last month</span>
               </p>
             </CardContent>
           </Card>
 
-          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
+          <Card className="hover-elevate border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl p-0 overflow-hidden">
+            <CardHeader className="flex flex-row items-center justify-between pb-1 pt-4 px-4 space-y-0">
+              <CardTitle className="text-[10px] lg:text-xs font-black text-muted-foreground uppercase tracking-[0.15em]">
                 Overdue
               </CardTitle>
-              <div className="w-12 h-12 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-600 shadow-inner">
-                <AlertCircle className="w-6 h-6" />
+              <div className="w-8 h-8 lg:w-12 lg:h-12 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 shadow-inner">
+                <AlertCircle className="w-4 h-4 lg:w-6 lg:h-6" />
               </div>
             </CardHeader>
-            <CardContent className="pt-2">
-              <div className="text-4xl font-display font-black tracking-tighter text-rose-600">
+            <CardContent className="pt-0 pb-4 px-4">
+              <div className="text-xl lg:text-4xl font-display font-black tracking-tighter text-rose-600">
                 KSh {overdueAmount.toLocaleString()}
               </div>
-              <p className="text-sm text-muted-foreground mt-2 font-semibold">
-                Immediate attention required
+              <p className="hidden lg:block text-sm text-muted-foreground mt-2 font-semibold">
+                Priority attention
               </p>
             </CardContent>
           </Card>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Chart */}
-          <Card className="lg:col-span-2 border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden">
-            <CardHeader className="border-b border-slate-100 bg-slate-50/30 p-8">
-              <CardTitle className="font-display text-2xl font-black tracking-tight">Revenue Overview</CardTitle>
-              <CardDescription className="text-base font-medium">Monthly collection trends for 2024</CardDescription>
+          <Card className="lg:col-span-2 border-none shadow-xl shadow-black/5 bg-white/80 backdrop-blur-sm rounded-2xl lg:rounded-3xl overflow-hidden">
+            <CardHeader className="border-b border-slate-100 bg-slate-50/30 p-4 lg:p-8">
+              <CardTitle className="font-display text-xl lg:text-2xl font-black tracking-tight">Revenue Overview</CardTitle>
+              <CardDescription className="text-sm lg:text-base font-medium">Monthly collection trends for 2024</CardDescription>
             </CardHeader>
-            <CardContent className="p-8">
-              <div className="h-[350px] w-full">
+            <CardContent className="p-4 lg:p-8">
+              <div className="h-[250px] lg:h-[350px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={chartData} margin={{ top: 20, right: 30, bottom: 20, left: 10 }}>
                     <defs>

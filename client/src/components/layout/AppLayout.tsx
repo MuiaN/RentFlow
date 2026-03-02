@@ -6,7 +6,9 @@ import {
   FileText, 
   Receipt as ReceiptIcon, 
   LayoutDashboard,
-  LogIn 
+  LogIn,
+  Menu,
+  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +21,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 
 const navItems = [
@@ -34,10 +37,25 @@ export function AppLayout({ children }: { children: ReactNode }) {
 
   return (
     <SidebarProvider>
-      <div className="flex h-screen w-full bg-slate-50/50 dark:bg-background overflow-hidden">
+      <div className="flex h-screen w-full bg-slate-50/50 dark:bg-background overflow-hidden relative">
+        {/* Mobile Header */}
+        <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-md border-b border-slate-200 z-50 px-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Building2 className="w-6 h-6 text-primary" />
+            <h1 className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent font-display">
+              RentFlow
+            </h1>
+          </div>
+          <SidebarTrigger>
+            <Button variant="ghost" size="icon" className="rounded-xl">
+              <Menu className="w-6 h-6" />
+            </Button>
+          </SidebarTrigger>
+        </div>
+
         <Sidebar variant="sidebar" className="border-r border-border/50">
           <SidebarContent>
-            <div className="p-6 mb-2">
+            <div className="p-6 mb-2 hidden lg:block">
               <div className="flex items-center gap-2">
                 <Building2 className="w-8 h-8 text-primary" />
                 <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent font-display">
@@ -48,8 +66,22 @@ export function AppLayout({ children }: { children: ReactNode }) {
                 Property Management
               </p>
             </div>
+
+            {/* Mobile Sidebar Close Button */}
+            <div className="lg:hidden p-6 flex justify-between items-center border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <Building2 className="w-6 h-6 text-primary" />
+                <span className="font-bold font-display">RentFlow</span>
+              </div>
+              <SidebarTrigger>
+                <Button variant="ghost" size="icon" className="rounded-xl h-8 w-8">
+                  <X className="w-4 h-4" />
+                </Button>
+              </SidebarTrigger>
+            </div>
+
             <SidebarGroup>
-              <SidebarGroupLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-2 px-4">
+              <SidebarGroupLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-2 px-4 pt-4 lg:pt-0">
                 Main Menu
               </SidebarGroupLabel>
               <SidebarGroupContent>
@@ -84,9 +116,21 @@ export function AppLayout({ children }: { children: ReactNode }) {
           </div>
         </Sidebar>
         
-        <main className="flex-1 overflow-y-auto p-4 md:p-8">
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 mt-16 lg:mt-0">
           <div className="max-w-7xl mx-auto space-y-8">
             {children}
+          </div>
+          
+          {/* Mobile Bottom Navigation (Optional but nice for App feel) */}
+          <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-xl border border-slate-200 shadow-2xl rounded-full px-6 py-3 flex items-center gap-8 z-50 ring-1 ring-black/5">
+            {navItems.slice(0, 4).map((item) => {
+              const active = location === item.url || (item.url !== "/dashboard" && location.startsWith(item.url));
+              return (
+                <Link key={item.title} href={item.url} className={`transition-all ${active ? 'text-primary scale-110' : 'text-slate-400'}`}>
+                  <item.icon className="w-6 h-6" />
+                </Link>
+              );
+            })}
           </div>
         </main>
       </div>
