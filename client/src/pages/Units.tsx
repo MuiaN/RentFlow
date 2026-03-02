@@ -30,7 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { UserPlus, Home, Plus } from "lucide-react";
+import { UserPlus, Home, Plus, Users } from "lucide-react";
 
 export default function Units() {
   const { units, tenants, assignTenant, addUnit } = useData();
