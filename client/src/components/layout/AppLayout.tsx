@@ -35,7 +35,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full bg-slate-50/50 dark:bg-background overflow-hidden relative">
-        {/* Mobile Header */}
+        {/* Mobile Header - Visible only on mobile */}
         <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-md border-b border-slate-200 z-50 px-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Building2 className="w-6 h-6 text-primary" />
@@ -53,69 +53,74 @@ export function AppLayout({ children }: { children: ReactNode }) {
           </Button>
         </div>
 
-        <Sidebar variant="sidebar" className="border-r border-border/50 hidden lg:flex">
-          <SidebarContent>
-            <div className="p-6 mb-2">
-              <div className="flex items-center gap-2">
-                <Building2 className="w-8 h-8 text-primary" />
-                <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent font-display">
+        {/* Desktop Sidebar - Fixed width, always visible on desktop */}
+        <div className="hidden lg:flex w-72 flex-col border-r border-border/50 bg-white dark:bg-card shrink-0">
+          <div className="p-8">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
+                <Building2 className="w-6 h-6" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent font-display leading-none">
                   RentFlow
                 </h1>
+                <p className="text-[10px] font-black text-muted-foreground mt-1 uppercase tracking-widest opacity-70">
+                  Management
+                </p>
               </div>
-              <p className="text-xs font-bold text-muted-foreground mt-1 uppercase tracking-widest opacity-70">
-                Property Management
-              </p>
             </div>
+          </div>
 
-            <SidebarGroup>
-              <SidebarGroupLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-2 px-4">
+          <div className="flex-1 px-4 space-y-8 overflow-y-auto">
+            <div>
+              <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-4 px-4">
                 Main Menu
-              </SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {navItems.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton 
-                        asChild 
-                        isActive={location === item.url || (item.url !== "/dashboard" && location.startsWith(item.url))}
-                        className="my-1 rounded-2xl transition-all duration-300 font-semibold h-11 px-4 hover:bg-primary/5 data-[active=true]:bg-primary data-[active=true]:text-white data-[active=true]:shadow-lg data-[active=true]:shadow-primary/20"
-                      >
-                        <Link href={item.url} className="flex items-center gap-3">
-                          <item.icon className="w-5 h-5" />
-                          <span>{item.title}</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-          <div className="mt-auto p-4 border-t border-border/50">
+              </p>
+              <nav className="space-y-2">
+                {navItems.map((item) => {
+                  const active = location === item.url || (item.url !== "/dashboard" && location.startsWith(item.url));
+                  return (
+                    <Link key={item.title} href={item.url}>
+                      <a className={`flex items-center gap-3 px-4 h-12 rounded-2xl font-bold transition-all duration-300 ${
+                        active 
+                        ? 'bg-primary text-white shadow-xl shadow-primary/20 scale-[1.02]' 
+                        : 'text-slate-500 hover:bg-slate-50 hover:text-primary'
+                      }`}>
+                        <item.icon className="w-5 h-5" />
+                        <span>{item.title}</span>
+                      </a>
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+          </div>
+
+          <div className="p-6 border-t border-border/50">
             <Button 
               variant="ghost" 
-              className="w-full justify-start gap-3 h-11 rounded-2xl text-muted-foreground hover:text-destructive hover:bg-destructive/5"
+              className="w-full justify-start gap-3 h-12 rounded-2xl text-slate-500 font-bold hover:text-destructive hover:bg-destructive/5 transition-colors"
               onClick={() => setLocation("/")}
             >
               <LogIn className="w-5 h-5 rotate-180" />
-              <span className="font-semibold">Sign Out</span>
+              <span>Sign Out</span>
             </Button>
           </div>
-        </Sidebar>
+        </div>
         
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 mt-16 lg:mt-0 pb-24 lg:pb-8">
-          <div className="max-w-7xl mx-auto space-y-8">
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12 mt-16 lg:mt-0 pb-24 lg:pb-12 bg-slate-50/50">
+          <div className="max-w-6xl mx-auto">
             {children}
           </div>
           
-          {/* Mobile Bottom Navigation - Unified Bar */}
-          <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-xl border border-slate-200 shadow-2xl rounded-full px-6 py-3 flex items-center gap-6 z-50 ring-1 ring-black/5">
+          {/* Mobile Bottom Navigation - Visible only on mobile */}
+          <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-xl border border-slate-200 shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-full px-6 py-3 flex items-center gap-6 z-50 ring-1 ring-black/5">
             {navItems.map((item) => {
               const active = location === item.url || (item.url !== "/dashboard" && location.startsWith(item.url));
               return (
                 <Link key={item.title} href={item.url} className={`transition-all flex flex-col items-center gap-1 ${active ? 'text-primary scale-110' : 'text-slate-400'}`}>
-                  <item.icon className="w-5 h-5" />
-                  <span className="text-[8px] font-bold uppercase tracking-tighter">{item.title.substring(0, 5)}</span>
+                  <item.icon className={`w-5 h-5 ${active ? 'stroke-[2.5px]' : ''}`} />
+                  <span className="text-[8px] font-black uppercase tracking-tighter">{item.title.substring(0, 5)}</span>
                 </Link>
               );
             })}
