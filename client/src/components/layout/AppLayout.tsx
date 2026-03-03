@@ -114,13 +114,15 @@ export function AppLayout({ children }: { children: ReactNode }) {
           </div>
           
           {/* Mobile Bottom Navigation - Visible only on mobile */}
-          <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-xl border border-slate-200 shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-full px-6 py-3 flex items-center gap-6 z-50 ring-1 ring-black/5">
+          <div className="lg:hidden fixed bottom-6 left-4 right-4 bg-white/95 backdrop-blur-xl border border-slate-200 shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-3xl px-2 py-3 flex items-center justify-around z-50 ring-1 ring-black/5">
             {navItems.map((item) => {
               const active = location === item.url || (item.url !== "/dashboard" && location.startsWith(item.url));
               return (
-                <Link key={item.title} href={item.url} className={`transition-all flex flex-col items-center gap-1 ${active ? 'text-primary scale-110' : 'text-slate-400'}`}>
-                  <item.icon className={`w-5 h-5 ${active ? 'stroke-[2.5px]' : ''}`} />
-                  <span className="text-[8px] font-black uppercase tracking-tighter">{item.title.substring(0, 5)}</span>
+                <Link key={item.title} href={item.url} className={`transition-all flex flex-col items-center gap-1.5 flex-1 ${active ? 'text-primary' : 'text-slate-400'}`}>
+                  <div className={`p-2 rounded-xl transition-all ${active ? 'bg-primary/10' : ''}`}>
+                    <item.icon className={`w-5 h-5 ${active ? 'stroke-[2.5px]' : ''}`} />
+                  </div>
+                  <span className={`text-[9px] font-black uppercase tracking-tighter ${active ? 'opacity-100' : 'opacity-70'}`}>{item.title}</span>
                 </Link>
               );
             })}
