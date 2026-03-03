@@ -149,10 +149,10 @@ export default function Tenants() {
         </Dialog>
       </div>
 
-      <Card className="border-none lg:border-border/50 shadow-xl lg:shadow-sm overflow-hidden bg-white/80 backdrop-blur-sm rounded-2xl lg:rounded-xl">
-        <div className="overflow-x-auto">
+      <div className="hidden lg:block">
+        <Card className="border-none lg:border-border/50 shadow-sm overflow-hidden bg-white/80 backdrop-blur-sm rounded-xl">
           <Table>
-            <TableHeader className="bg-slate-50/80 hidden lg:table-header-group">
+            <TableHeader className="bg-slate-50/80">
               <TableRow>
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14 pl-6">Tenant</TableHead>
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Contact</TableHead>
@@ -161,13 +161,12 @@ export default function Tenants() {
                 <TableHead className="text-right font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14 pr-6">Action</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="grid grid-cols-1 lg:table-row-group gap-4 p-4 lg:p-0">
+            <TableBody>
               {tenants.map((tenant) => {
                 const unit = units.find(u => u.id === tenant.assignedUnitId);
-                
                 return (
-                  <TableRow key={tenant.id} className="hover:bg-slate-50/80 transition-all group border border-slate-100 lg:border-0 rounded-2xl lg:rounded-none flex flex-col lg:table-row mb-2 lg:mb-0 bg-white lg:bg-transparent shadow-sm lg:shadow-none">
-                    <TableCell className="pl-4 lg:pl-6 py-3 lg:py-5 lg:table-cell">
+                  <TableRow key={tenant.id} className="hover:bg-slate-50/80 transition-all group">
+                    <TableCell className="pl-6 py-5">
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 text-primary font-black flex items-center justify-center border border-primary/20 shadow-inner">
                           {tenant.name.charAt(0)}
@@ -175,17 +174,15 @@ export default function Tenants() {
                         <span className="font-black text-slate-900 leading-none">{tenant.name}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex flex-col lg:flex-row gap-1 lg:gap-4">
-                      <span className="text-[10px] lg:hidden font-black text-muted-foreground uppercase tracking-widest mb-1">Contact</span>
+                    <TableCell className="py-5">
                       <div className="flex flex-col gap-1.5">
                         <span className="text-xs font-bold text-slate-500 flex items-center gap-2"><Mail className="w-3.5 h-3.5 text-primary" /> {tenant.email}</span>
                         <span className="text-xs font-bold text-slate-500 flex items-center gap-2"><Phone className="w-3.5 h-3.5 text-indigo-500" /> {tenant.phone}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:block">
-                      <span className="text-[10px] lg:hidden font-black text-muted-foreground uppercase tracking-widest">Unit</span>
+                    <TableCell className="py-5">
                       {unit ? (
-                        <div className="flex flex-col lg:items-start text-right lg:text-left">
+                        <div className="flex flex-col">
                           <span className="font-black text-slate-900 leading-none mb-1">{unit.name}</span>
                           <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{unit.propertyName}</span>
                         </div>
@@ -193,13 +190,12 @@ export default function Tenants() {
                         <span className="text-xs font-bold text-slate-400 italic bg-slate-50 px-3 py-1 rounded-lg">UNASSIGNED</span>
                       )}
                     </TableCell>
-                    <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:block">
-                      <span className="text-[10px] lg:hidden font-black text-muted-foreground uppercase tracking-widest">Status</span>
+                    <TableCell className="py-5">
                       {getStatusBadge(tenant.paymentStatus)}
                     </TableCell>
-                    <TableCell className="text-right pr-4 lg:pr-6 py-4 lg:py-5 px-4 lg:table-cell flex justify-end border-t border-slate-50 lg:border-0">
-                      <Button variant="ghost" size="sm" asChild className="rounded-xl font-bold hover:bg-primary/5 hover:text-primary transition-all w-full lg:w-auto">
-                        <Link href={`/tenants/${tenant.id}`} className="flex items-center justify-center gap-2">
+                    <TableCell className="text-right pr-6 py-5">
+                      <Button variant="ghost" size="sm" asChild className="rounded-xl font-bold hover:bg-primary/5 hover:text-primary transition-all">
+                        <Link href={`/tenants/${tenant.id}`} className="flex items-center gap-2">
                           View Profile <ChevronRight className="w-4 h-4" />
                         </Link>
                       </Button>
@@ -209,8 +205,43 @@ export default function Tenants() {
               })}
             </TableBody>
           </Table>
-        </div>
-      </Card>
+        </Card>
+      </div>
+
+      <div className="lg:hidden space-y-4">
+        {tenants.map((tenant) => {
+          const unit = units.find(u => u.id === tenant.assignedUnitId);
+          return (
+            <Card key={tenant.id} className="border-none shadow-xl bg-white rounded-2xl p-4">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary font-black flex items-center justify-center border border-primary/20">
+                    {tenant.name.charAt(0)}
+                  </div>
+                  <div>
+                    <h3 className="font-black text-slate-900 leading-tight">{tenant.name}</h3>
+                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{unit?.name || 'Unassigned'}</p>
+                  </div>
+                </div>
+                {getStatusBadge(tenant.paymentStatus)}
+              </div>
+              <div className="grid grid-cols-2 gap-2 mb-4 border-y border-slate-50 py-3">
+                <div className="flex flex-col">
+                  <span className="text-[8px] font-black text-muted-foreground uppercase tracking-tighter">Email</span>
+                  <span className="text-xs font-bold text-slate-600 truncate">{tenant.email}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[8px] font-black text-muted-foreground uppercase tracking-tighter">Phone</span>
+                  <span className="text-xs font-bold text-slate-600">{tenant.phone}</span>
+                </div>
+              </div>
+              <Button asChild className="w-full h-11 rounded-xl font-bold" variant="secondary">
+                <Link href={`/tenants/${tenant.id}`}>View Full Profile</Link>
+              </Button>
+            </Card>
+          );
+        })}
+      </div>
     </AppLayout>
   );
 }

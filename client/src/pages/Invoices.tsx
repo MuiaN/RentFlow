@@ -33,10 +33,10 @@ export default function Invoices() {
         </Button>
       </div>
 
-      <Card className="border-none lg:border-border/50 shadow-xl lg:shadow-sm overflow-hidden bg-white/50 backdrop-blur-sm rounded-2xl lg:rounded-xl">
-        <div className="overflow-x-auto">
+      <div className="hidden lg:block">
+        <Card className="border-none lg:border-border/50 shadow-sm overflow-hidden bg-white/50 backdrop-blur-sm rounded-xl">
           <Table>
-            <TableHeader className="bg-slate-50/80 hidden lg:table-header-group">
+            <TableHeader className="bg-slate-50/80">
               <TableRow>
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14 pl-6">Invoice #</TableHead>
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Tenant</TableHead>
@@ -47,34 +47,27 @@ export default function Invoices() {
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14 text-right pr-6">Action</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="grid grid-cols-1 lg:table-row-group gap-4 p-4 lg:p-0">
+            <TableBody>
               {sortedInvoices.map((invoice) => {
                 const tenant = tenants.find(t => t.id === invoice.tenantId);
-                
                 return (
-                  <TableRow key={invoice.id} className="hover:bg-slate-50/80 transition-all group border border-slate-100 lg:border-0 rounded-2xl lg:rounded-none flex flex-col lg:table-row mb-2 lg:mb-0 bg-white lg:bg-transparent shadow-sm lg:shadow-none">
-                    <TableCell className="pl-4 lg:pl-6 py-3 lg:py-5 lg:table-cell flex justify-between items-center lg:block">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">ID</span>
-                      <span className="font-mono text-xs font-black text-slate-400 bg-slate-50 lg:bg-transparent px-2 py-1 rounded-md">{invoice.invoiceNumber}</span>
+                  <TableRow key={invoice.id} className="hover:bg-slate-50/80 transition-all group">
+                    <TableCell className="pl-6 py-5">
+                      <span className="font-mono text-xs font-black text-slate-400">{invoice.invoiceNumber}</span>
                     </TableCell>
-                    <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:block">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Tenant</span>
+                    <TableCell className="py-5">
                       <span className="font-black text-slate-900 leading-none">{tenant?.name || "Unknown"}</span>
                     </TableCell>
-                    <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:block">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Month</span>
+                    <TableCell className="py-5">
                       <span className="font-bold text-slate-600">{invoice.month}</span>
                     </TableCell>
-                    <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:block">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Due Date</span>
+                    <TableCell className="py-5">
                       <span className="text-xs font-bold text-slate-500 uppercase tracking-tighter">{format(new Date(invoice.dueDate), 'MMM d, yyyy')}</span>
                     </TableCell>
-                    <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:text-right lg:block">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Amount</span>
-                      <span className="font-black text-slate-900">KSh {invoice.amount.toLocaleString()}</span>
+                    <TableCell className="text-right py-5">
+                      <span className="font-black text-slate-900 text-lg">KSh {invoice.amount.toLocaleString()}</span>
                     </TableCell>
-                    <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:text-center lg:block">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Status</span>
+                    <TableCell className="text-center py-5">
                       {invoice.status === 'Paid' ? (
                         <Badge className="bg-emerald-50 text-emerald-700 border-none font-black text-[9px] rounded-md">PAID</Badge>
                       ) : invoice.status === 'Overdue' ? (
@@ -83,8 +76,8 @@ export default function Invoices() {
                         <Badge className="bg-amber-50 text-amber-700 border-none font-black text-[9px] rounded-md">DUE</Badge>
                       )}
                     </TableCell>
-                    <TableCell className="text-right pr-4 lg:pr-6 py-4 lg:py-5 px-4 lg:table-cell flex justify-end border-t border-slate-50 lg:border-0">
-                      <Button variant="ghost" size="sm" asChild className="rounded-xl font-bold hover:bg-primary/5 hover:text-primary transition-all w-full lg:w-auto">
+                    <TableCell className="text-right pr-6 py-5">
+                      <Button variant="ghost" size="sm" asChild className="rounded-xl font-bold hover:bg-primary/5 hover:text-primary transition-all">
                         <Link href={`/tenants/${invoice.tenantId}`} className="flex items-center justify-center gap-2">
                           Manage <ArrowRight className="w-4 h-4" />
                         </Link>
@@ -95,8 +88,41 @@ export default function Invoices() {
               })}
             </TableBody>
           </Table>
-        </div>
-      </Card>
+        </Card>
+      </div>
+
+      <div className="lg:hidden space-y-4">
+        {sortedInvoices.map((invoice) => {
+          const tenant = tenants.find(t => t.id === invoice.tenantId);
+          return (
+            <Card key={invoice.id} className="border-none shadow-xl bg-white rounded-2xl p-5">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="font-mono text-[10px] font-black text-slate-400">{invoice.invoiceNumber}</span>
+                    {invoice.status === 'Paid' ? (
+                      <Badge className="bg-emerald-50 text-emerald-700 border-none font-black text-[8px] rounded-md px-1.5 py-0">PAID</Badge>
+                    ) : (
+                      <Badge className={`${invoice.status === 'Overdue' ? 'bg-rose-50 text-rose-700' : 'bg-amber-50 text-amber-700'} border-none font-black text-[8px] rounded-md px-1.5 py-0`}>
+                        {invoice.status.toUpperCase()}
+                      </Badge>
+                    )}
+                  </div>
+                  <h3 className="font-black text-slate-900 text-lg">{tenant?.name || "Unknown"}</h3>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{invoice.month} Rent</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-lg font-black text-slate-900">KSh {invoice.amount.toLocaleString()}</span>
+                  <p className="text-[8px] font-black text-slate-400 uppercase tracking-tighter mt-1">Due {format(new Date(invoice.dueDate), 'MMM d, yyyy')}</p>
+                </div>
+              </div>
+              <Button asChild className="w-full h-11 rounded-xl font-bold bg-slate-50 text-slate-600 hover:bg-slate-100 border-none" variant="outline">
+                <Link href={`/tenants/${invoice.tenantId}`}>View Billing Details</Link>
+              </Button>
+            </Card>
+          );
+        })}
+      </div>
     </AppLayout>
   );
 }

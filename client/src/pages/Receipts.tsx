@@ -58,10 +58,10 @@ export default function Receipts() {
         </div>
       </div>
 
-      <Card className="border-none lg:border-border/50 shadow-xl lg:shadow-sm overflow-hidden bg-white/50 backdrop-blur-sm rounded-2xl lg:rounded-xl">
-        <div className="overflow-x-auto">
+      <div className="hidden lg:block">
+        <Card className="border-none lg:border-border/50 shadow-sm overflow-hidden bg-white/80 backdrop-blur-sm rounded-xl">
           <Table>
-            <TableHeader className="bg-slate-50/80 hidden lg:table-header-group">
+            <TableHeader className="bg-slate-50/80">
               <TableRow>
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14 pl-6">Receipt #</TableHead>
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Date</TableHead>
@@ -71,66 +71,78 @@ export default function Receipts() {
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14 text-right pr-6">Action</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="grid grid-cols-1 lg:table-row-group gap-4 p-4 lg:p-0">
-              {sortedReceipts.length > 0 ? (
-                sortedReceipts.map((receipt) => {
-                  const tenant = tenants.find(t => t.id === receipt.tenantId);
-                  const invoice = invoices.find(i => i.id === receipt.invoiceId);
-                  
-                  return (
-                    <TableRow key={receipt.id} className="hover:bg-slate-50/80 transition-all group border border-slate-100 lg:border-0 rounded-2xl lg:rounded-none flex flex-col lg:table-row mb-2 lg:mb-0 bg-white lg:bg-transparent shadow-sm lg:shadow-none">
-                      <TableCell className="pl-4 lg:pl-6 py-3 lg:py-5 lg:table-cell flex justify-between items-center lg:block">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center lg:hidden">
-                            <ReceiptIcon className="w-4 h-4" />
-                          </div>
-                          <span className="font-mono text-xs font-black text-slate-400 bg-slate-50 lg:bg-transparent px-2 py-1 rounded-md">{receipt.receiptNumber}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:block">
-                        <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Paid On</span>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-tighter">{format(new Date(receipt.paymentDate), 'MMM d, yyyy')}</span>
-                      </TableCell>
-                      <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:block">
-                        <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Tenant</span>
-                        <span className="font-black text-slate-900 leading-none">{tenant?.name || "Unknown"}</span>
-                      </TableCell>
-                      <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:text-right lg:block">
-                        <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Amount</span>
-                        <span className="font-black text-slate-900 text-lg">KSh {receipt.amountPaid.toLocaleString()}</span>
-                      </TableCell>
-                      <TableCell className="py-2 lg:py-5 px-4 lg:table-cell flex justify-between items-center lg:text-center lg:block">
-                        <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Method</span>
-                        <Badge className="bg-indigo-50 text-indigo-700 border-none font-black text-[9px] rounded-md tracking-tighter uppercase px-2 py-0.5">{receipt.paymentMethod}</Badge>
-                      </TableCell>
-                      <TableCell className="text-right pr-4 lg:pr-6 py-4 lg:py-5 px-4 lg:table-cell flex justify-end border-t border-slate-50 lg:border-0">
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="rounded-xl font-bold hover:bg-primary/5 hover:text-primary transition-all w-full lg:w-auto text-xs uppercase tracking-widest h-10 px-4"
-                          onClick={() => handleDownload(receipt.receiptNumber)}
-                        >
-                          <DownloadCloud className="w-4 h-4 mr-2" /> PDF
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={6} className="p-12 text-center text-muted-foreground">
-                    <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-300 mx-auto mb-4 shadow-inner">
-                      <Search className="w-8 h-8" />
-                    </div>
-                    <p className="font-bold text-slate-900">No receipts found</p>
-                    <p className="text-sm font-medium mt-1">Try adjusting your search terms.</p>
-                  </TableCell>
-                </TableRow>
-              )}
+            <TableBody>
+              {sortedReceipts.map((receipt) => {
+                const tenant = tenants.find(t => t.id === receipt.tenantId);
+                return (
+                  <TableRow key={receipt.id} className="hover:bg-slate-50/80 transition-all group">
+                    <TableCell className="pl-6 py-5">
+                      <span className="font-mono text-xs font-black text-slate-400">{receipt.receiptNumber}</span>
+                    </TableCell>
+                    <TableCell className="py-5">
+                      <span className="text-xs font-bold text-slate-500 uppercase tracking-tighter">{format(new Date(receipt.paymentDate), 'MMM d, yyyy')}</span>
+                    </TableCell>
+                    <TableCell className="py-5">
+                      <span className="font-black text-slate-900 leading-none">{tenant?.name || "Unknown"}</span>
+                    </TableCell>
+                    <TableCell className="text-right py-5">
+                      <span className="font-black text-slate-900 text-lg">KSh {receipt.amountPaid.toLocaleString()}</span>
+                    </TableCell>
+                    <TableCell className="text-center py-5">
+                      <Badge className="bg-indigo-50 text-indigo-700 border-none font-black text-[9px] rounded-md uppercase px-2 py-0.5">{receipt.paymentMethod}</Badge>
+                    </TableCell>
+                    <TableCell className="text-right pr-6 py-5">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="rounded-xl font-bold hover:bg-primary/5 hover:text-primary transition-all text-xs uppercase tracking-widest"
+                        onClick={() => handleDownload(receipt.receiptNumber)}
+                      >
+                        <DownloadCloud className="w-4 h-4 mr-2" /> PDF
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
-        </div>
-      </Card>
+        </Card>
+      </div>
+
+      <div className="lg:hidden space-y-4">
+        {sortedReceipts.map((receipt) => {
+          const tenant = tenants.find(t => t.id === receipt.tenantId);
+          return (
+            <Card key={receipt.id} className="border-none shadow-xl bg-white rounded-2xl p-5">
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <ReceiptIcon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="font-mono text-[10px] font-black text-slate-400">{receipt.receiptNumber}</span>
+                    <h3 className="font-black text-slate-900">{tenant?.name || "Unknown"}</h3>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="text-lg font-black text-slate-900">KSh {receipt.amountPaid.toLocaleString()}</span>
+                  <p className="text-[8px] font-black text-slate-400 uppercase tracking-tighter mt-1">{format(new Date(receipt.paymentDate), 'MMM d, yyyy')}</p>
+                </div>
+              </div>
+              <div className="flex justify-between items-center bg-slate-50 p-3 rounded-xl mb-3">
+                <span className="text-[8px] font-black text-muted-foreground uppercase tracking-widest">Method</span>
+                <Badge className="bg-white text-indigo-700 border-none font-black text-[9px] rounded-md px-2 py-0.5">{receipt.paymentMethod}</Badge>
+              </div>
+              <Button 
+                onClick={() => handleDownload(receipt.receiptNumber)}
+                className="w-full h-11 rounded-xl font-bold bg-primary text-white shadow-lg shadow-primary/20"
+              >
+                Download Receipt PDF
+              </Button>
+            </Card>
+          );
+        })}
+      </div>
     </AppLayout>
   );
 }

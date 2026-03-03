@@ -143,12 +143,12 @@ export default function Units() {
         </Dialog>
       </div>
 
-      <Card className="border-none lg:border-border/50 shadow-xl lg:shadow-sm overflow-hidden bg-white/50 backdrop-blur-sm rounded-2xl lg:rounded-xl">
-        <div className="overflow-x-auto">
+      <div className="hidden lg:block">
+        <Card className="border-none lg:border-border/50 shadow-sm overflow-hidden bg-white/50 backdrop-blur-sm rounded-xl">
           <Table>
-            <TableHeader className="bg-slate-50/80 hidden lg:table-header-group">
+            <TableHeader className="bg-slate-50/80">
               <TableRow>
-                <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Unit</TableHead>
+                <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14 pl-6">Unit</TableHead>
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Property</TableHead>
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Type</TableHead>
                 <TableHead className="font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14">Rent</TableHead>
@@ -156,56 +156,42 @@ export default function Units() {
                 <TableHead className="text-right font-bold text-muted-foreground uppercase tracking-widest text-[10px] h-14 pr-6">Actions</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="grid grid-cols-1 md:grid-cols-2 lg:table-row-group gap-4 p-4 lg:p-0">
+            <TableBody>
               {units.map((unit) => {
                 const assignedTenant = tenants.find(t => t.id === unit.assignedTenantId);
-                
                 return (
-                  <TableRow key={unit.id} className="hover:bg-slate-50/80 transition-all group border border-slate-100 lg:border-0 rounded-2xl lg:rounded-none flex flex-col lg:table-row mb-2 lg:mb-0 bg-white lg:bg-transparent shadow-sm lg:shadow-none">
-                    <TableCell className="font-bold text-slate-900 py-3 lg:py-5 px-4 lg:px-4 lg:table-cell flex justify-between items-center">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Unit</span>
-                      {unit.name}
-                    </TableCell>
-                    <TableCell className="font-medium text-slate-600 py-2 lg:py-5 px-4 lg:px-4 lg:table-cell flex justify-between items-center">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Property</span>
-                      {unit.propertyName}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground font-medium py-2 lg:py-5 px-4 lg:px-4 lg:table-cell flex justify-between items-center">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Type</span>
-                      {unit.type}
-                    </TableCell>
-                    <TableCell className="font-bold text-slate-800 py-2 lg:py-5 px-4 lg:px-4 lg:table-cell flex justify-between items-center">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Rent</span>
-                      KSh {unit.rentAmount.toLocaleString()}
-                    </TableCell>
-                    <TableCell className="py-2 lg:py-5 px-4 lg:px-4 lg:table-cell flex justify-between items-center">
-                      <span className="lg:hidden text-[10px] font-black text-muted-foreground uppercase tracking-widest">Status</span>
+                  <TableRow key={unit.id} className="hover:bg-slate-50/80 transition-all group">
+                    <TableCell className="pl-6 py-5 font-bold text-slate-900">{unit.name}</TableCell>
+                    <TableCell className="py-5 font-medium text-slate-600">{unit.propertyName}</TableCell>
+                    <TableCell className="py-5 text-muted-foreground font-medium">{unit.type}</TableCell>
+                    <TableCell className="py-5 font-bold text-slate-800">KSh {unit.rentAmount.toLocaleString()}/mo</TableCell>
+                    <TableCell className="py-5">
                       {unit.status === "Occupied" ? (
-                        <Badge className="bg-emerald-50 text-emerald-700 border-none shadow-none font-bold rounded-lg px-3 py-1 text-[10px]">
+                        <Badge className="bg-emerald-50 text-emerald-700 border-none shadow-none font-bold rounded-lg px-3 py-1">
                           OCCUPIED
                         </Badge>
                       ) : (
-                        <Badge className="bg-amber-50 text-amber-700 border-none shadow-none font-bold rounded-lg px-3 py-1 text-[10px]">
+                        <Badge className="bg-amber-50 text-amber-700 border-none shadow-none font-bold rounded-lg px-3 py-1">
                           VACANT
                         </Badge>
                       )}
                     </TableCell>
-                    <TableCell className="text-right pr-4 lg:pr-6 py-4 lg:py-5 px-4 lg:table-cell flex justify-end border-t border-slate-50 lg:border-0">
+                    <TableCell className="text-right pr-6 py-5">
                       {unit.status === "Vacant" ? (
                         <Dialog open={assignDialogOpen && selectedUnit === unit.id} onOpenChange={(open) => {
                           setAssignDialogOpen(open);
                           if(open) setSelectedUnit(unit.id);
                         }}>
                           <DialogTrigger asChild>
-                            <Button size="sm" variant="outline" className="rounded-xl font-bold shadow-sm border-primary/20 text-primary hover:bg-primary hover:text-white transition-all w-full lg:w-auto">
-                              <UserPlus className="w-4 h-4 mr-2" /> Assign Tenant
+                            <Button size="sm" variant="outline" className="rounded-xl font-bold shadow-sm border-primary/20 text-primary hover:bg-primary hover:text-white transition-all">
+                              <UserPlus className="w-4 h-4 mr-2" /> Assign
                             </Button>
                           </DialogTrigger>
-                          <DialogContent className="sm:max-w-md rounded-2xl mx-4">
+                          <DialogContent className="sm:max-w-md rounded-2xl">
                             <DialogHeader>
                               <DialogTitle className="font-display text-2xl font-black">Assign Tenant</DialogTitle>
                               <DialogDescription className="font-medium">
-                                Select an unassigned tenant for {unit.name}.
+                                Select an unassigned tenant for {unit.name} at {unit.propertyName}.
                               </DialogDescription>
                             </DialogHeader>
                             <div className="py-6">
@@ -252,8 +238,60 @@ export default function Units() {
               })}
             </TableBody>
           </Table>
-        </div>
-      </Card>
+        </Card>
+      </div>
+
+      <div className="lg:hidden space-y-4">
+        {units.map((unit) => {
+          const assignedTenant = tenants.find(t => t.id === unit.assignedTenantId);
+          return (
+            <Card key={unit.id} className="border-none shadow-xl bg-white rounded-2xl p-5">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="font-black text-slate-900 text-lg leading-tight">{unit.name}</h3>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{unit.propertyName}</p>
+                </div>
+                {unit.status === "Occupied" ? (
+                  <Badge className="bg-emerald-50 text-emerald-700 border-none font-black text-[8px] rounded-md px-2 py-0.5">OCCUPIED</Badge>
+                ) : (
+                  <Badge className="bg-amber-50 text-amber-700 border-none font-black text-[8px] rounded-md px-2 py-0.5">VACANT</Badge>
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-4 py-4 border-y border-slate-50 mb-4">
+                <div>
+                  <span className="text-[8px] font-black text-muted-foreground uppercase tracking-tighter">Unit Type</span>
+                  <p className="text-xs font-bold text-slate-700">{unit.type}</p>
+                </div>
+                <div>
+                  <span className="text-[8px] font-black text-muted-foreground uppercase tracking-tighter">Monthly Rent</span>
+                  <p className="text-xs font-black text-primary">KSh {unit.rentAmount.toLocaleString()}</p>
+                </div>
+              </div>
+              {unit.status === "Vacant" ? (
+                <Button 
+                  onClick={() => {
+                    setSelectedUnit(unit.id);
+                    setAssignDialogOpen(true);
+                  }}
+                  className="w-full h-11 rounded-xl font-bold bg-primary shadow-lg shadow-primary/20"
+                >
+                  Assign Tenant
+                </Button>
+              ) : (
+                <div className="flex items-center gap-3 bg-slate-50 p-3 rounded-xl">
+                  <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-xs font-black text-slate-400 border border-slate-100">
+                    {assignedTenant?.name.charAt(0)}
+                  </div>
+                  <div>
+                    <span className="text-[8px] font-black text-muted-foreground uppercase tracking-tighter leading-none">Occupied by</span>
+                    <p className="text-xs font-bold text-slate-900">{assignedTenant?.name}</p>
+                  </div>
+                </div>
+              )}
+            </Card>
+          );
+        })}
+      </div>
     </AppLayout>
   );
 }
